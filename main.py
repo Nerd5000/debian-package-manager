@@ -1,19 +1,19 @@
 from os import remove
 from subprocess import call
 from os import chmod
+print("""
+(Linux Package Manager)
+(1) for installing a package
+(2) for unistalling a package
+""")
+operation=int(input('input operation number : '))
 packageName = str(input('Enter Package Name : '))
-shFile = open('package.sh', 'w')
-shFile.write(
-    """
-#!/bin/sh
-echo "Starting Update"
-sudo apt-get update
-echo "Finishing Update"
-echo "Starting Downloading"
-sudo apt-get install {0}
-echo "Finishing Downloading"
-    """.format(packageName))
-shFile.close()
+if operation==1:
+    import install
+    install.installPackage(packageName)
+elif operation==2:
+    import unistall
+    unistall.uninstallPackage(packageName)
 chmod('./package.sh', 0o775)
 call('./package.sh', shell=True)
 remove('./package.sh')
